@@ -13,7 +13,7 @@
     }
   ],
   "paths": {
-    "/api/currentUser": {
+    "/api/auth/currentUser": {
       "get": {
         "tags": ["api"],
         "description": "获取当前的用户",
@@ -24,7 +24,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CurrentUser"
+                  "$ref": "#/components/schemas/auth/currentUser"
                 }
               }
             }
@@ -102,7 +102,7 @@
       },
       "x-swagger-router-controller": "api"
     },
-    "/api/login/account": {
+    "/api/auth/local/signin": {
       "post": {
         "tags": ["login"],
         "description": "登录接口",

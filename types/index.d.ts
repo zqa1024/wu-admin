@@ -1,5 +1,5 @@
 export namespace API {
-  /** GET /api/currentUser */
+  /** GET /api/auth/currentUser */
   export type GET_API_CURRENT_USER_QUERY = {
     /** example:  123 */
     token: string;
@@ -92,7 +92,7 @@ export namespace API {
     success: boolean;
   };
 
-  /** POST /api/login/account */
+  /** POST /api/auth/local/signin */
   export type POST_API_LOGIN_ACCOUNT_QUERY = {
     /** example:  123 */
     token: string;
