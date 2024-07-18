@@ -1,4 +1,4 @@
-import { addRule, removeRule, rule, updateRule } from '@/services/ant-design-pro/api';
+// import { addRule, removeRule, rule, updateRule } from '@/services/ant-design-pro/api';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns, ProDescriptionsItemProps } from '@ant-design/pro-components';
 import {
@@ -15,16 +15,19 @@ import { Button, Drawer, Input, message } from 'antd';
 import React, { useRef, useState } from 'react';
 import type { FormValueType } from './components/UpdateForm';
 import UpdateForm from './components/UpdateForm';
+import { getUsers } from '@/services/ant-design-pro/auth';
 
 /**
  * @en-US Add node
  * @zh-CN 添加节点
  * @param fields
  */
-const handleAdd = async (fields: API.RuleListItem) => {
+const handleAdd = async (fields: API.ListUserDto) => {
   const hide = message.loading('正在添加');
+  console.log(fields);
+
   try {
-    await addRule({ ...fields });
+    // await addRule({ ...fields });
     hide();
     message.success('Added successfully');
     return true;
@@ -43,12 +46,14 @@ const handleAdd = async (fields: API.RuleListItem) => {
  */
 const handleUpdate = async (fields: FormValueType) => {
   const hide = message.loading('Configuring');
+  console.log(fields);
+
   try {
-    await updateRule({
-      name: fields.name,
-      desc: fields.desc,
-      key: fields.key,
-    });
+    // await updateRule({
+    // name: fields.name,
+    // desc: fields.desc,
+    // key: fields.key,
+    // });
     hide();
 
     message.success('Configuration is successful');
@@ -66,13 +71,13 @@ const handleUpdate = async (fields: FormValueType) => {
  *
  * @param selectedRows
  */
-const handleRemove = async (selectedRows: API.RuleListItem[]) => {
+const handleRemove = async (selectedRows: API.ListUserDto[]) => {
   const hide = message.loading('正在删除');
   if (!selectedRows) return true;
   try {
-    await removeRule({
-      key: selectedRows.map((row) => row.key),
-    });
+    // await removeRule({
+    // key: selectedRows.map((row) => row.key),
+    // });
     hide();
     message.success('Deleted successfully and will refresh soon');
     return true;
@@ -98,8 +103,8 @@ const TableList: React.FC = () => {
   const [showDetail, setShowDetail] = useState<boolean>(false);
 
   const actionRef = useRef<ActionType>();
-  const [currentRow, setCurrentRow] = useState<API.RuleListItem>();
-  const [selectedRowsState, setSelectedRows] = useState<API.RuleListItem[]>([]);
+  const [currentRow, setCurrentRow] = useState<API.ListUserDto>();
+  const [selectedRowsState, setSelectedRows] = useState<API.ListUserDto[]>([]);
 
   /**
    * @en-US International configuration
@@ -107,7 +112,7 @@ const TableList: React.FC = () => {
    * */
   const intl = useIntl();
 
-  const columns: ProColumns<API.RuleListItem>[] = [
+  const columns: ProColumns<API.ListUserDto>[] = [
     {
       title: (
         <FormattedMessage
@@ -115,7 +120,7 @@ const TableList: React.FC = () => {
           defaultMessage="Rule name"
         />
       ),
-      dataIndex: 'name',
+      dataIndex: 'username',
       tip: 'The rule name is the unique key',
       render: (dom, entity) => {
         return (
@@ -135,22 +140,7 @@ const TableList: React.FC = () => {
       dataIndex: 'desc',
       valueType: 'textarea',
     },
-    {
-      title: (
-        <FormattedMessage
-          id="pages.searchTable.titleCallNo"
-          defaultMessage="Number of service calls"
-        />
-      ),
-      dataIndex: 'callNo',
-      sorter: true,
-      hideInForm: true,
-      renderText: (val: string) =>
-        `${val}${intl.formatMessage({
-          id: 'pages.searchTable.tenThousand',
-          defaultMessage: ' 万 ',
-        })}`,
-    },
+
     {
       title: <FormattedMessage id="pages.searchTable.titleStatus" defaultMessage="Status" />,
       dataIndex: 'status',
@@ -243,7 +233,7 @@ const TableList: React.FC = () => {
 
   return (
     <PageContainer>
-      <ProTable<API.RuleListItem, API.PageParams>
+      <ProTable<API.ListUserDto, API.PageParams>
         headerTitle={intl.formatMessage({
           id: 'pages.searchTable.title',
           defaultMessage: 'Enquiry form',
@@ -264,7 +254,7 @@ const TableList: React.FC = () => {
             <PlusOutlined /> <FormattedMessage id="pages.searchTable.new" defaultMessage="New" />
           </Button>,
         ]}
-        request={rule}
+        request={getUsers}
         columns={columns}
         rowSelection={{
           onChange: (_, selectedRows) => {
@@ -320,7 +310,7 @@ const TableList: React.FC = () => {
         open={createModalOpen}
         onOpenChange={handleModalOpen}
         onFinish={async (value) => {
-          const success = await handleAdd(value as API.RuleListItem);
+          const success = await handleAdd(value as API.ListUserDto);
           if (success) {
             handleModalOpen(false);
             if (actionRef.current) {
@@ -377,7 +367,7 @@ const TableList: React.FC = () => {
         closable={false}
       >
         {currentRow?.name && (
-          <ProDescriptions<API.RuleListItem>
+          <ProDescriptions<API.ListUserDto>
             column={2}
             title={currentRow?.name}
             request={async () => ({
@@ -386,7 +376,7 @@ const TableList: React.FC = () => {
             params={{
               id: currentRow?.name,
             }}
-            columns={columns as ProDescriptionsItemProps<API.RuleListItem>[]}
+            columns={columns as ProDescriptionsItemProps<API.ListUserDto>[]}
           />
         )}
       </Drawer>

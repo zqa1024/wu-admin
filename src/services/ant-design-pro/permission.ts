@@ -3,10 +3,7 @@
 import { request } from '@umijs/max';
 
 /** 此处后端没有提供注释 POST /api/permission/create */
-export async function permissionControllerCreateRole(
-  body: API.CreatePermissionDto,
-  options?: { [key: string]: any },
-) {
+export async function createRole(body: API.CreatePermissionDto, options?: { [key: string]: any }) {
   return request<any>('/api/permission/create', {
     method: 'POST',
     headers: {
@@ -18,7 +15,7 @@ export async function permissionControllerCreateRole(
 }
 
 /** 此处后端没有提供注释 GET /api/permission/getList */
-export async function permissionControllerGetList(options?: { [key: string]: any }) {
+export async function getList(options?: { [key: string]: any }) {
   return request<any>('/api/permission/getList', {
     method: 'GET',
     ...(options || {}),
@@ -26,10 +23,7 @@ export async function permissionControllerGetList(options?: { [key: string]: any
 }
 
 /** 此处后端没有提供注释 POST /api/permission/update */
-export async function permissionControllerUpdateRole(
-  body: API.UpdatePermissionDto,
-  options?: { [key: string]: any },
-) {
+export async function updateRole(body: API.UpdatePermissionDto, options?: { [key: string]: any }) {
   return request<any>('/api/permission/update', {
     method: 'POST',
     headers: {

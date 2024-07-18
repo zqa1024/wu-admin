@@ -3,10 +3,7 @@
 import { request } from '@umijs/max';
 
 /** 此处后端没有提供注释 POST /api/role/create */
-export async function roleControllerCreateRole(
-  body: API.CreateRoleDto,
-  options?: { [key: string]: any },
-) {
+export async function createRole(body: API.CreateRoleDto, options?: { [key: string]: any }) {
   return request<any>('/api/role/create', {
     method: 'POST',
     headers: {
@@ -18,10 +15,7 @@ export async function roleControllerCreateRole(
 }
 
 /** 此处后端没有提供注释 POST /api/role/update */
-export async function roleControllerUpdateRole(
-  body: API.UpdateRoleDto,
-  options?: { [key: string]: any },
-) {
+export async function updateRole(body: API.UpdateRoleDto, options?: { [key: string]: any }) {
   return request<any>('/api/role/update', {
     method: 'POST',
     headers: {

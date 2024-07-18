@@ -1,6 +1,6 @@
 import { Footer } from '@/components';
-import { login } from '@/services/ant-design-pro/api';
-import { getFakeCaptcha } from '@/services/ant-design-pro/login';
+import { signLocal } from '@/services/ant-design-pro/auth';
+// import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 import {
   AlipayCircleOutlined,
   LockOutlined,
@@ -117,7 +117,7 @@ const Login: React.FC = () => {
   const handleSubmit = async (values: API.LoginParams) => {
     try {
       // 登录
-      const msg = await login({ ...values, type });
+      const msg = await signLocal({ ...values, type });
       if (msg.code === 200) {
         const { accessToken, refreshToken } = msg.data;
         localStorage.setItem('accessToken', accessToken);
@@ -337,12 +337,12 @@ const Login: React.FC = () => {
                   },
                 ]}
                 onGetCaptcha={async (phone) => {
-                  const result = await getFakeCaptcha({
-                    phone,
-                  });
-                  if (!result) {
-                    return;
-                  }
+                  // const result = await getFakeCaptcha({
+                  //   phone,
+                  // });
+                  // if (!result) {
+                  //   return;
+                  // }
                   message.success('获取验证码成功！验证码为：1234');
                 }}
               />
